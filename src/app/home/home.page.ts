@@ -87,26 +87,54 @@ export class HomePage {
     this.operacao = valor;
     switch(this.operacao){
       case 0 : {
-        this.expressao += '+';
+        if(this.visor == '0' || this.calculado){
+          this.visor = '+';
+          this.expressao = '+';
+          this.calculado = false;
+        }
+        else{
+          this.expressao += '+';
+        }
         break;
       }
       case 1 : {
-        this.expressao += '-';
+        if(this.visor == '0' || this.calculado){
+          this.visor = '-';
+          this.expressao = '-';
+          this.calculado = false;
+        }
+        else{
+          this.expressao += '-';
+        }
         break;
       }
       case 2 : {
-        this.expressao += '*';
+        if(this.expressao != '0' && !this.calculado)
+          this.expressao += '*';
         break;
       }
       case 3 : {
-        this.expressao += '/';
+        if(this.expressao != '0' && !this.calculado)
+          this.expressao += '/';
         break;
       }
       case 4 : {
-        this.expressao += '%';
+        if(this.expressao != '0' && !this.calculado)
+          this.expressao += '%';
         break;
       }
       case 5 : {
+        if(this.expressao.length >= 3){
+          var aux = this.expressao.length;
+          console.log(" " + this.expressao[aux-1] + this.expressao[aux-2] + this.expressao[aux-3] + " duh");
+          if(this.expressao[aux-1] == '1' && this.expressao[aux-2] == '-' && this.expressao[aux-3] == '*'){
+            this.expressao = this.expressao.slice(0, this.expressao.length - 3);
+          }
+          else
+            this.expressao += "*-1";
+        }
+        else if(this.expressao != '0' && !this.calculado)
+          this.expressao += "*-1";
         break;
       }
       case 6 : {
