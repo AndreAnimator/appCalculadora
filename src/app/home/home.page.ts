@@ -125,9 +125,38 @@ export class HomePage {
         break;
       }
       case 4 : {
+        var count = 0;
+        var pos;
+        var char = '';
         if(this.expressao != '0' && !this.calculado){
           this.expressao += '%';
           this.visor += '%';
+          for(var i = this.expressao.length; i > 0; i--){
+            if(this.expressao[i] == '-' || this.expressao[i] == '+' || this.expressao[i] == '/' || this.expressao[i] == '*'){
+              char = this.expressao[i];
+              count++;
+              if(count >= 1 && this.expressao[0] != '-' || this.expressao[0] != '+'){
+                var porcentagem = this.expressao.slice(i+1, this.expressao.length);
+                console.log("porcentagem expressaoooo " + porcentagem);
+                this.expressao = this.expressao.slice(0, i);
+                console.log("expressao antes de calcular " + this.expressao);
+                this.expressao = String(this.expression());
+                console.log("expressao calculada " + this.expressao);
+                var calculo : number = Number(this.expressao) * Number(porcentagem.slice(0, -1)) / 100;
+                console.log("Porcentagem calculada " + calculo);
+                this.expressao = this.expressao + char + calculo;
+                console.log("Expressao pro calculo final " + this.expressao);
+                this.expressao = String(this.expression());
+                console.log("Calculo final");
+              }
+              pos = i;
+            }
+          }
+          if(count == 1 && this.expressao[0] == '-' || count == 0){
+            let porcentagem : number = Number(this.expressao.slice(0, -1))/100;
+            this.expressao = char + String(porcentagem);
+            console.log("Porcentagem individual: " + porcentagem + " sinal " + char);
+          }
         }
         break;
       }
