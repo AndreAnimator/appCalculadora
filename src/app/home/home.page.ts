@@ -94,6 +94,7 @@ export class HomePage {
         }
         else{
           this.expressao += '+';
+          this.visor += '+';
         }
         break;
       }
@@ -105,22 +106,29 @@ export class HomePage {
         }
         else{
           this.expressao += '-';
+          this.visor += '-';
         }
         break;
       }
       case 2 : {
-        if(this.expressao != '0' && !this.calculado)
+        if(this.expressao != '0' && !this.calculado){
           this.expressao += '*';
+          this.visor += '*';
+        }
         break;
       }
       case 3 : {
-        if(this.expressao != '0' && !this.calculado)
+        if(this.expressao != '0' && !this.calculado){
           this.expressao += '/';
+          this.visor += '/';
+        }
         break;
       }
       case 4 : {
-        if(this.expressao != '0' && !this.calculado)
+        if(this.expressao != '0' && !this.calculado){
           this.expressao += '%';
+          this.visor += '%';
+        }
         break;
       }
       case 5 : {
@@ -129,16 +137,26 @@ export class HomePage {
           console.log(" " + this.expressao[aux-1] + this.expressao[aux-2] + this.expressao[aux-3] + " duh");
           if(this.expressao[aux-1] == '1' && this.expressao[aux-2] == '-' && this.expressao[aux-3] == '*'){
             this.expressao = this.expressao.slice(0, this.expressao.length - 3);
+            this.visor = this.visor.slice(0, this.visor.length - 3);
           }
-          else
+          else{
             this.expressao += "*-1";
+            this.visor += "*-1";
+          }
         }
-        else if(this.expressao != '0' && !this.calculado)
+        else if(this.expressao != '0' && !this.calculado){
           this.expressao += "*-1";
+          this.visor += "*-1";
+        }
         break;
       }
       case 6 : {
-        this.expressao = this.expressao.slice(0, -1);
+        if(this.expressao.length == 1)
+          this.zerar();
+        else{
+          this.expressao = this.expressao.slice(0, -1);
+          this.visor = this.visor.slice(0, -1);
+        }
         break;
       }
     }
@@ -154,6 +172,10 @@ export class HomePage {
     this.expressao = this.visor;
     console.log("Resultado final " + this.expressao);
     console.log("Resultado final do visor " + this.visor);
+    if(this.expressao == 'Infinity'){
+      this.expressao = 'Erro matemático';
+      this.visor = 'Erro matemático';
+    }
   }
 
   zerar(){
