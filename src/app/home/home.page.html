@@ -30,9 +30,9 @@
       <ion-fab-button class="operacao" (click)="adicionarOperacao(0)">+</ion-fab-button>
     </ion-item>
     <ion-item>
-      <ion-fab-button id="zero" (click)="adicionarNumero('0')">0</ion-fab-button>
+      <ion-fab-button (click)="adicionarNumero('0')">0</ion-fab-button>
       <ion-fab-button (click)="adicionarNumero('.')">,</ion-fab-button>
-      <ion-fab-button (click)="adicionarOperacao(6)" class="operacao">xx</ion-fab-button>
+      <ion-fab-button (click)="adicionarOperacao(6)" class="operacao" class="backspace">xx</ion-fab-button>
       <ion-fab-button (click)="calcular()"class="operacao">=</ion-fab-button>
     </ion-item>
   </ion-list>

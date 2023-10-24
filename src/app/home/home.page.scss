@@ -34,6 +34,12 @@ ion-fab-button{
   --color: #050505;
 }
 
+.backspace{
+  line-height: 1;
+  height: 26px;
+  content: url("../../assets/icon/backspace.svg");
+}
+
 #zero{
   width: 45%;
 }

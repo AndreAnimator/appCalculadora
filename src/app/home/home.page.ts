@@ -32,6 +32,16 @@ export class HomePage {
     while (this.peek().charCodeAt(0) >= '0'.charCodeAt(0) && this.peek().charCodeAt(0) <= '9'.charCodeAt(0)) {
         result = 10 * result + this.get().charCodeAt(0) - '0'.charCodeAt(0);
     }
+
+    if (this.peek() == '.') {
+      this.get(); // '.'
+      let decimal = 0.1;
+      while (this.peek().charCodeAt(0) >= '0'.charCodeAt(0) && this.peek().charCodeAt(0) <= '9'.charCodeAt(0)) {
+        result += (this.get().charCodeAt(0) - '0'.charCodeAt(0)) * decimal;
+        decimal /= 10;
+      }
+    }
+
     return result;
   }
 
@@ -73,13 +83,32 @@ export class HomePage {
 
   adicionarNumero(valor : string){
     if(this.visor == '0' || this.calculado){
-      this.visor = valor;
-      this.expressao = valor;
+      if(valor == '.'){
+        this.visor = "0.";
+        this.expressao = "0.";
+      }
+      else{
+        this.visor = valor;
+        this.expressao = valor;
+      }
       this.calculado = false;
     }
     else{
-      this.expressao += valor;
-      this.visor += valor;
+      var posicao = 0;
+      var numero = '';
+      numero = this.expressao.slice(posicao, this.expressao.length);
+      if(this.expressao[this.expressao.length] != '.' && valor != '.'){
+        this.expressao += valor;
+        this.visor += valor;
+      }
+      else if(Number(numero) % 1 == 0){
+        console.log("COMO QUE TÁ AQUI")
+        if(valor == '.' && this.expressao[this.expressao.length-1] != '.'){
+          console.log(" CARACTERE ATNTERIRO " + this.expressao[this.expressao.length-1]);
+          this.expressao += valor;
+          this.visor += valor;
+        }
+      }
     }
   }
 
@@ -93,8 +122,15 @@ export class HomePage {
           this.calculado = false;
         }
         else{
-          this.expressao += '+';
-          this.visor += '+';
+          if(this.expressao[this.expressao.length-1] != '*' && this.expressao[this.expressao.length-1] != '-' && this.expressao[this.expressao.length-1] != '/' && this.expressao[this.expressao.length-1] != '+'){
+            this.expressao += '+';
+            this.visor += '+';
+          }else{
+            this.expressao = this.expressao.slice(0, -1);
+            this.visor = this.visor.slice(0, -1);
+            this.expressao += '+';
+            this.visor += '+';
+          }
         }
         break;
       }
@@ -105,22 +141,47 @@ export class HomePage {
           this.calculado = false;
         }
         else{
-          this.expressao += '-';
-          this.visor += '-';
+          if(this.expressao[this.expressao.length-1] != '-' && this.expressao[this.expressao.length-1] != '+'){
+            this.expressao += '-';
+            this.visor += '-';
+          }else if(this.expressao[this.expressao.length - 1] == '+'){
+            this.expressao = this.expressao.slice(0, -1);
+            this.visor = this.visor.slice(0, -1);
+            this.expressao += '-';
+            this.visor += '-';
+          }
         }
         break;
       }
       case 2 : {
         if(this.expressao != '0' && !this.calculado){
-          this.expressao += '*';
-          this.visor += '*';
+          if(this.expressao[this.expressao.length-1] != '*' && this.expressao[this.expressao.length-1] != '-' && this.expressao[this.expressao.length-1] != '/' && this.expressao[this.expressao.length-1] != '+'){
+            this.expressao += '*';
+            this.visor += '*';
+          }else{
+            if(this.expressao.length > 1){
+              this.expressao = this.expressao.slice(0, -1);
+              this.visor = this.visor.slice(0, -1);
+              this.expressao += '*';
+              this.visor += '*';
+            }
+          }
         }
         break;
       }
       case 3 : {
         if(this.expressao != '0' && !this.calculado){
-          this.expressao += '/';
-          this.visor += '/';
+          if(this.expressao[this.expressao.length-1] != '*' && this.expressao[this.expressao.length-1] != '-' && this.expressao[this.expressao.length-1] != '/' && this.expressao[this.expressao.length-1] != '+' && this.expressao.length > 1){
+            this.expressao += '/';
+            this.visor += '/';
+          }else{
+            if(this.expressao.length > 1){
+              this.expressao = this.expressao.slice(0, -1);
+              this.visor = this.visor.slice(0, -1);
+              this.expressao += '/';
+              this.visor += '/';
+            }
+          }
         }
         break;
       }
