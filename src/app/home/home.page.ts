@@ -94,20 +94,26 @@ export class HomePage {
       this.calculado = false;
     }
     else{
+      this.expressao += valor;
       var posicao = 0;
+      var count = 0;
       var numero = '';
-      numero = this.expressao.slice(posicao, this.expressao.length);
-      if(this.expressao[this.expressao.length] != '.' && valor != '.'){
-        this.expressao += valor;
-        this.visor += valor;
-      }
-      else if(Number(numero) % 1 == 0){
-        console.log("COMO QUE TÁ AQUI")
-        if(valor == '.' && this.expressao[this.expressao.length-1] != '.'){
-          console.log(" CARACTERE ATNTERIRO " + this.expressao[this.expressao.length-1]);
-          this.expressao += valor;
-          this.visor += valor;
+      for(var i = this.expressao.length; i > 0; i--){
+        console.log("hehe " + i + " " + this.expressao[i]);
+        if((this.expressao[i] < '0' || this.expressao[i] > '9' ) && this.expressao[i] != '.' && count == 0){
+          console.log("o que que passou pelo teste do if?? " + i + " char: " + this.expressao[i]);
+          count++;
+          posicao = i;
         }
+      }
+      count = 0;
+      numero = this.expressao.slice(posicao, this.expressao.length);
+      console.log("Quantas virgulas tem o numero " + numero + "? R: " + (numero.split(".").length - 1));
+      if((numero.split(".").length - 1) > 1 && valor == '.'){
+        this.expressao = this.expressao.slice(0, -1);
+      }
+      else if((numero.split(".").length - 1) <= 1){
+        this.visor += valor;
       }
     }
   }
