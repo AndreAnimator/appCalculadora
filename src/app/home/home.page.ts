@@ -110,10 +110,13 @@ export class HomePage {
       numero = this.expressao.slice(posicao, this.expressao.length);
       console.log("Quantas virgulas tem o numero " + numero + "? R: " + (numero.split(".").length - 1));
       if((numero.split(".").length - 1) > 1 && valor == '.'){
+        console.log("Nuh-uh, não vai adicionar virgula");
         this.expressao = this.expressao.slice(0, -1);
       }
       else if((numero.split(".").length - 1) <= 1){
+        console.log("Hum, tudo bem pode adicionar");
         this.visor += valor;
+        console.log(this.visor + " += " + valor);
       }
     }
   }
